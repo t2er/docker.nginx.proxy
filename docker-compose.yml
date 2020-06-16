@@ -1,0 +1,22 @@
+version: "3.5"
+
+services:
+
+  nginx-proxy:
+    build:
+      context: ./docker/nginx
+      dockerfile: nginx.docker
+    container_name: cnt.nginx.proxy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./docker/certs:/etc/nginx/certs:ro
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    networks: 
+      - webproxy
+
+networks:
+  webproxy:
+    external: true
